@@ -6,6 +6,9 @@ import ed.lab.ed1labo04.Repository.ProductRepository;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 
 public class ProductService {
@@ -36,5 +39,20 @@ public class ProductService {
         productEntity.setQuantity(updateProductRequest.getQuantity());
         productEntity.setPrice(updateProductRequest.getPrice());
         return productRepository.save(productEntity);
+    }
+    public ProductEntity createProduct(CreateProductRequest createProductRequest) {
+        if(createProductRequest.getPrice()<=0)
+            throw new IllegalArgumentException("Price must not be null");
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setName(createProductRequest.getName());
+        productEntity.setPrice(createProductRequest.getPrice());
+        productEntity.setQuantity(0);
+        return productRepository.save(productEntity);
+    }
+    public List<ProductEntity> getAllProducts(){
+        return productRepository.findAll();
+    }
+    public Optional<ProductEntity> getProductById(long id){
+        return productRepository.findById(id);
     }
 }
