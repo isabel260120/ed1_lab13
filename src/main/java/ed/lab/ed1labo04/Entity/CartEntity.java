@@ -17,6 +17,7 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name="cart_id")
     private Long id;
+    // Un carrito contiene varios items; con CascadeType.ALL se guardan junto con el carrito.
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CartItemEntity> cartItems=new ArrayList<>();
