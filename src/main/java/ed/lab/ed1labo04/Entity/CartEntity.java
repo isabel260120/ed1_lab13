@@ -15,20 +15,16 @@ import java.util.List;
 public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name="cart_id")
+
     private Long id;
     // Un carrito contiene varios items; con CascadeType.ALL se guardan junto con el carrito.
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="cart_id")
     private List<CartItemEntity> cartItems=new ArrayList<>();
     private Double totalPrice;
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public List<CartItemEntity> getCartItems() {
@@ -39,11 +35,13 @@ public class CartEntity {
         this.cartItems = cartItems;
     }
 
-    public Double getTotalprice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalprice(Double totalprice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+
 }

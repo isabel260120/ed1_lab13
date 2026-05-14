@@ -98,7 +98,7 @@ public class CartService {
         CartEntity cartEntity = new CartEntity();
 
         cartEntity.setCartItems(cartItems);
-        cartEntity.setTotalprice(totalPrice);
+        cartEntity.setTotalPrice(totalPrice);
 
         return cartRepository.save(cartEntity);
     }
