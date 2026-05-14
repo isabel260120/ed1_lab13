@@ -18,32 +18,38 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+
     @PostMapping
     public ResponseEntity<ProductEntity>createProduct(@RequestBody CreateProductRequest createProductRequest){
-        try{
-            ProductEntity productEntity = productService.create(createProductRequest);
-            return new ResponseEntity<>(productEntity, HttpStatus.CREATED);
-        }
-        catch(IllegalArgumentException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            ProductEntity productEntity = productService.createProduct(createProductRequest);
+            return ResponseEntity.status(201).body(productEntity);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<ProductEntity>updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequest updateProductRequest){
-        try{
-            return ResponseEntity.ok(productService.updateProduct(id,updateProductRequest));
-
-        }catch(IllegalArgumentException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ProductEntity>updateProduct(@PathVariable Integer id, @RequestBody UpdateProductRequest updateProductRequest){
+        try {
+            ProductEntity productEntity = productService.updateProduct(id, updateProductRequest);
+            return ResponseEntity.ok(productEntity);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ProductEntity>getProduct(@PathVariable Long id) {
-        return productService.getProductById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ProductEntity>getProduct(@PathVariable Integer id) {
+        try {
+            ProductEntity productEntity = productService.getProductById(id);
+            return ResponseEntity.ok(productEntity);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
     @GetMapping
     public ResponseEntity<List<ProductEntity>> getAllProducts(){
         return ResponseEntity.ok(productService.getAllProducts());
+
     }
 
 }
