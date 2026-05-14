@@ -50,6 +50,7 @@ public class ProductService {
         return productRepository.save(productEntity);
     }
 
+
     public List<ProductEntity> getAllProducts(){
         return productRepository.findAll();
     }
